@@ -25,8 +25,8 @@ class Main:
             # draw game
             self.game.ShowBg(self.screen)
             self.game.ShowPiece(self.screen)
-            if dragger.dragging:
-                dragger.UpdateBlit(self.screen)
+            # if dragger.dragging:
+            #     dragger.UpdateBlit(self.screen)
             
             # handle event
             for event in pygame.event.get():
