@@ -1,11 +1,10 @@
 import pygame
-from square import Square
 from const import *
 from piece import *
-        
+
 class Board:
     def __init__(self):
-        self.squares = [[Square(row, col, None) for col in range(COLS)] for row in range(ROWS)]
+        self.squares: List[Piece] = [[None for col in range(COLS)] for row in range(ROWS)]
         self.__addPiece('white')
         self.__addPiece('black')
            
@@ -39,24 +38,33 @@ class Board:
             letter_rect = letter.get_rect(bottomleft=(i*SQSIZE+2, 8*SQSIZE+2))
             surface.blit(letter, letter_rect)
     
+    def drawPathPiece(self, surface: pygame.Surface, piece):
+        for move in piece.pos_rival:
+            rect = pygame.Rect(move[1]*SQSIZE, move[0]*SQSIZE, SQSIZE, SQSIZE)
+            pygame.draw.rect(surface, (255, 0, 0, 0.3), rect)
+        for move in piece.pos_empty:
+            rect = pygame.Rect(move[1]*SQSIZE, move[0]*SQSIZE, SQSIZE, SQSIZE)
+            pygame.draw.rect(surface, (102, 255, 102, 0.3), rect)
+            
+    
+    
     # add piece into 8x8 square
     def __addPiece(self, color):
         row_pawn, row_other = (6, 7) if color == 'white' else (1, 0)
         # pawns
         for col in range(COLS):
-            self.squares[row_pawn][col] = Square(row_pawn, col, Pawn(color))
+            self.squares[row_pawn][col] = Pawn(color, row_pawn, col)
+            
         # knights
-        self.squares[row_other][1] = Square(row_other, 1, Knight(color))
-        self.squares[row_other][6] = Square(row_other, 6, Knight(color))
+        self.squares[row_other][1] = Knight(color, row_other, 1)
+        self.squares[row_other][6] = Knight(color, row_other, 6)
         # bishops
-        self.squares[row_other][2] = Square(row_other, 2, Bishop(color))
-        self.squares[row_other][5] = Square(row_other, 5, Bishop(color))
+        self.squares[row_other][2] = Bishop(color, row_other, 2)
+        self.squares[row_other][5] = Bishop(color, row_other, 5)
         # rooks
-        self.squares[row_other][0] = Square(row_other, 0, Rook(color))
-        self.squares[row_other][7] = Square(row_other, 7, Rook(color))
+        self.squares[row_other][0] = Rook(color, row_other, 0)
+        self.squares[row_other][7] = Rook(color, row_other, 7)
         # queen
-        self.squares[row_other][3] = Square(row_other, 3, Queen(color))
+        self.squares[row_other][3] = Queen(color, row_other, 3)
         # king
-        self.squares[row_other][4] = Square(row_other, 4, King(color))
-        
-        
+        self.squares[row_other][4] = King(color, row_other, 4)            

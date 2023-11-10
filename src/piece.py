@@ -1,13 +1,14 @@
 import os
 import pygame
 from const import *
+from move import *
 
 class Piece:
-    def __init__(self, name: str, color: str, value: float):
+    def __init__(self, name: str, color: str, row: int, col: int, value: float):
         self.name = name
         self.color = color
-        self.moves = []
-        self.moved = False
+        self.row = row
+        self.col = col
         
         value_sign = 1 if color == 'white' else -1
         self.value = value * value_sign
@@ -18,37 +19,39 @@ class Piece:
         self.img = pygame.image.load(self.path_img).convert_alpha()
         self.img_rect = self.img.get_rect()
         
-    def addMoves(self, move):
-        self.moves.append(move)
-        
-    def draw(self, surface: pygame.Surface, row: int, col: int):
-        self.img_rect.center = col*SQSIZE + SQSIZE//2, row*SQSIZE + SQSIZE//2
+    def draw(self, surface: pygame.Surface):
+        self.img_rect.center = self.col*SQSIZE + SQSIZE//2, self.row*SQSIZE + SQSIZE//2
         surface.blit(self.img, self.img_rect)
     
 
 
 
 class Pawn(Piece):
-    def __init__(self, color):
+    def __init__(self, color, row: int, col: int):
         self.dir = -1 if color == 'white' else 1
-        Piece.__init__(self, 'pawn', color, 1.0)
+        Piece.__init__(self, 'pawn', color, row, col, 1.0)
         
-class Knight(Piece):
-    def __init__(self, color):
-        Piece.__init__(self, 'knight', color, 3.0)
+        
+class Knight(Piece, KinghtMove):
+    def __init__(self, color, row: int, col: int):
+        Piece.__init__(self, 'knight', color, row, col, 3.0)
+        KinghtMove.__init__(self, color, row, col)
         
 class Bishop(Piece):
-    def __init__(self, color):
-        Piece.__init__(self, 'bishop', color, 3.5)
-        
+    def __init__(self, color, row: int, col: int):
+        Piece.__init__(self, 'bishop', color, row, col, 3.5)
+
+
 class Rook(Piece):
-    def __init__(self, color):
-        Piece.__init__(self, 'rook', color, 5.0)
-        
+    def __init__(self, color, row: int, col: int):
+        Piece.__init__(self, 'rook', color, row, col, 5.0)
+
+
 class Queen(Piece):
-    def __init__(self, color):
-        Piece.__init__(self, 'queen', color, 9.0)
-        
+    def __init__(self, color, row: int, col: int):
+        Piece.__init__(self, 'queen', color, row, col, 9.0)
+
+
 class King(Piece):
-    def __init__(self, color):
-        Piece.__init__(self, 'king', color, 10000)
+    def __init__(self, color, row: int, col: int):
+        Piece.__init__(self, 'king', color, row, col, 10000)
