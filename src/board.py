@@ -39,12 +39,17 @@ class Board:
             surface.blit(letter, letter_rect)
     
     def drawPathPiece(self, surface: pygame.Surface, piece):
+        
         for move in piece.pos_rival:
             rect = pygame.Rect(move[1]*SQSIZE, move[0]*SQSIZE, SQSIZE, SQSIZE)
-            pygame.draw.rect(surface, (255, 0, 0, 0.3), rect)
+            pygame.draw.rect(surface, (255, 0, 0, 128), rect)
+            
         for move in piece.pos_empty:
             rect = pygame.Rect(move[1]*SQSIZE, move[0]*SQSIZE, SQSIZE, SQSIZE)
-            pygame.draw.rect(surface, (102, 255, 102, 0.3), rect)
+            pygame.draw.rect(surface, (102, 255, 102, 128), rect)
+            
+        rect = pygame.Rect(piece.col*SQSIZE, piece.row*SQSIZE, SQSIZE, SQSIZE)
+        pygame.draw.rect(surface, (255, 255, 0), rect)
             
     
     

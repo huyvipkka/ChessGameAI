@@ -19,7 +19,7 @@ class Game:
             for col in range(COLS):
                 piece = self.board.squares[row][col]
                 if self.dragger.dragging and self.dragger.piece == piece:
-                    self.dragger.updateBlit(surface)
+                    self.dragger.drawPieceDragging(surface)
                 elif piece != None:
                     piece.draw(surface)
          
