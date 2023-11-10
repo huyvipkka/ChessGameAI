@@ -6,11 +6,15 @@ from piece import *
 class Board:
     def __init__(self):
         self.squares = [[Square(row, col, None) for col in range(COLS)] for row in range(ROWS)]
-        self.__AddPiece('white')
-        self.__AddPiece('black')
+        self.__addPiece('white')
+        self.__addPiece('black')
            
     # draw board
-    def Draw(self, surface: pygame.Surface):
+    def draw(self, surface: pygame.Surface):
+        self.__drawBoard(surface)
+        self.__drawNumberLetter(surface)
+        
+    def __drawBoard(self, surface: pygame.Surface):
         for row in range(ROWS):
             for col in range(COLS):
                 if (row + col) % 2 == 0:
@@ -19,7 +23,8 @@ class Board:
                     color = BOARD_DARK
                 rect = pygame.Rect(col*SQSIZE, row*SQSIZE, SQSIZE, SQSIZE)
                 pygame.draw.rect(surface, color, rect)
-                
+    
+    def __drawNumberLetter(self, surface: pygame.Surface):
         # draw 1->8, A->H
         for i in range(8):
             if i % 2 == 0:
@@ -35,7 +40,7 @@ class Board:
             surface.blit(letter, letter_rect)
     
     # add piece into 8x8 square
-    def __AddPiece(self, color):
+    def __addPiece(self, color):
         row_pawn, row_other = (6, 7) if color == 'white' else (1, 0)
         # pawns
         for col in range(COLS):

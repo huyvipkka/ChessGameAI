@@ -10,17 +10,17 @@ class Game:
         self.dragger = Dragger()
     
     # draw board
-    def ShowBg(self, surface: pygame.Surface):
-        self.board.Draw(surface)
+    def showBg(self, surface: pygame.Surface):
+        self.board.draw(surface)
       
     # draw piece in board
-    def ShowPiece(self, surface:pygame.Surface=None):
+    def showPiece(self, surface:pygame.Surface=None):
         for row in range(ROWS):
             for col in range(COLS):
-                piece = self.board.squares[row][col].piece
-                if self.dragger.dragging and self.dragger.piece == piece:
-                    self.dragger.UpdateBlit(surface)
-                elif self.board.squares[row][col].HasPiece():
-                    piece.Draw(surface, row, col)
+                square = self.board.squares[row][col]
+                if self.dragger.dragging and self.dragger.piece == square.piece:
+                    self.dragger.updateBlit(surface)
+                else:
+                    square.drawPiece(surface)
                 
                     

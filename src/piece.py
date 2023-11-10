@@ -18,10 +18,10 @@ class Piece:
         self.img = pygame.image.load(self.path_img).convert_alpha()
         self.img_rect = self.img.get_rect()
         
-    def AddMoves(self, move):
+    def addMoves(self, move):
         self.moves.append(move)
         
-    def Draw(self, surface: pygame.Surface, row: int, col: int):
+    def draw(self, surface: pygame.Surface, row: int, col: int):
         self.img_rect.center = col*SQSIZE + SQSIZE//2, row*SQSIZE + SQSIZE//2
         surface.blit(self.img, self.img_rect)
     

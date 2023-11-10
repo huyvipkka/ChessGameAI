@@ -7,6 +7,10 @@ class Square:
         self.col = col
         self.piece = piece
     
-    def HasPiece(self):
+    def hasPiece(self):
         return self.piece != None
+    
+    def drawPiece(self, surface: pygame.Surface):
+        if self.hasPiece():
+            self.piece.draw(surface, self.row, self.col)
             

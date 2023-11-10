@@ -23,28 +23,28 @@ class Main:
         
         while self.running:
             # draw game
-            self.game.ShowBg(self.screen)
-            self.game.ShowPiece(self.screen)
+            self.game.showBg(self.screen)
+            self.game.showPiece(self.screen)
             # if dragger.dragging:
             #     dragger.UpdateBlit(self.screen)
             
             # handle event
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    dragger.UpdateMouse(event.pos)
+                    dragger.updateMouse(event.pos)
                     row_clicked = dragger.mouseY // SQSIZE
                     col_clicked = dragger.mouseX // SQSIZE
-                    if board.squares[row_clicked][col_clicked].HasPiece():
+                    if board.squares[row_clicked][col_clicked].hasPiece():
                         piece = board.squares[row_clicked][col_clicked].piece
-                        dragger.SaveInit(event.pos)
-                        dragger.DragPiece(piece)
+                        dragger.saveInit(event.pos)
+                        dragger.dragPiece(piece)
                     
                 elif event.type == pygame.MOUSEMOTION:
                     if dragger.dragging:
-                        dragger.UpdateMouse(event.pos)
+                        dragger.updateMouse(event.pos)
                         
                 elif event.type == pygame.MOUSEBUTTONUP:
-                    dragger.UndragPiece()
+                    dragger.undragPiece()
                 
                 elif event.type == pygame.QUIT:
                     self.running = False
